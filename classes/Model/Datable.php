@@ -50,7 +50,7 @@ class Datable {
 	/**
 	 * @var int
 	 */
-	private $collection_id;
+	var $collection_id;
 
 	/**
 	 * Datable constructor.

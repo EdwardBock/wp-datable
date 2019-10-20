@@ -20,7 +20,7 @@ class WPQueryExtension {
 	public function __construct(Plugin $plugin) {
 		$this->plugin = $plugin;
 		add_filter( 'posts_join', array( $this, 'posts_join' ), 10, 2 );
-		add_filter( 'posts_join', array( $this, 'posts_join' ), 10, 2 );
+		add_filter( 'posts_where', array( $this, 'posts_where' ), 10, 2 );
 		add_filter( 'posts_orderby', array( $this, 'posts_orderby' ), 10, 2 );
 	}
 
@@ -46,7 +46,7 @@ class WPQueryExtension {
 
 		$db = $this->plugin->database;
 		$join .= " LEFT JOIN {$db->tableContents()} ON ({$db->wpdb()->posts}.ID = {$db->tableContents()}.post_id) ";
-		$join .= " LEFT JOIN {$db->tableDates()} ON ({$db->tableContents()}.date_id = {$db->tableDates()}.id)";
+		$join .= " LEFT JOIN {$db->tableDates} ON ({$db->tableContents()}.date_id = {$db->tableDates()}.id)";
 
 		return $join;
 	}
@@ -64,7 +64,12 @@ class WPQueryExtension {
 		if ( !$this->hasDatable($wp_query) ) return $where;
 
 		$db = $this->plugin->database;
-		$where .= " AND ( {$db->tableDates()}.start_date IS NOT NULL AND {$db->tableDates()}.start_date >= now() )";
+		global $wpdb;
+		$where .= " AND ( ".
+		          " $wpdb->posts.ID = $db->table.content_id ".
+		          " AND {$db->table}.start_date IS NOT NULL".
+		          " AND {$db->table}.start_date >= now() ".
+		          " )";
 
 		return $where;
 	}
@@ -80,8 +85,8 @@ class WPQueryExtension {
 		if(!$this->hasDatable($wp_query)) return $orderby;
 
 		$db = $this->plugin->database;
-		return " {$db->tableDates()}.start_date ASC,".
-		       " ISNULL({$db->tableDates()}.start_time), {$db->tableDates()}.start_time ASC, "
+		return " {$db->table}.start_date ASC,".
+		       " ISNULL({$db->table}.start_time), {$db->table}.start_time ASC, "
 		       .$orderby;
 	}
 }

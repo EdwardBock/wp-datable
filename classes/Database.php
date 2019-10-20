@@ -7,7 +7,14 @@ namespace Palasthotel\WordPress\Datable;
 use Palasthotel\WordPress\Datable\Model\Count;
 use Palasthotel\WordPress\Datable\Model\Datable;
 
+/**
+ * @property string table
+ */
 class Database {
+
+	public function __construct() {
+		$this->table = $this->wpdb()->prefix . "datable_dates";
+	}
 
 	/**
 	 * @return \wpdb
@@ -19,20 +26,13 @@ class Database {
 	}
 
 	/**
-	 * @return string
-	 */
-	public function table() {
-		return $this->wpdb()->prefix . "datable_dates";
-	}
-
-	/**
 	 * @param Datable $datable
 	 *
 	 * @return false|int date id
 	 */
 	public function addDate( $datable ) {
 		return $this->wpdb()->insert(
-			$this->table(),
+			$this->table,
 			array(
 				"collection_id" => $datable->collection_id,
 				"content_id"    => $datable->content_id,
@@ -53,7 +53,7 @@ class Database {
 		if ( $datable->id ) {
 			// update if already exists
 			return $this->wpdb()->update(
-				$this->table(),
+				$this->table,
 				array(
 					"collection_id" => $datable->collection_id,
 					"content_id"    => $datable->content_id,
@@ -80,7 +80,7 @@ class Database {
 		$results = $this->wpdb()->get_results(
 			$this->wpdb()->prepare(
 				"SELECT id, collection_id, content_id, start_date, end_date, start_time, end_time 
-					FROM {$this->table()} 
+					FROM {$this->table} 
 					WHERE collection_id = %d 
 					ORDER BY start_date ASC, ISNULL(start_time), start_time ASC",
 				$collection_id
@@ -99,7 +99,7 @@ class Database {
 		$results = $this->wpdb()->get_row(
 			$this->wpdb()->prepare(
 				"SELECT id, collection_id, content_id, start_date, end_date, start_time, end_time 
-					FROM {$this->table()} 
+					FROM {$this->table} 
 					WHERE collection_id = %d 
 					ORDER BY start_date ASC, ISNULL(start_time), start_time ASC LIMIT 1",
 				$collection_id
@@ -118,7 +118,7 @@ class Database {
 		$results = $this->wpdb()->get_row(
 			$this->wpdb()->prepare(
 				"SELECT id, collection_id, content_id, start_date, end_date, start_time, end_time 
-					FROM {$this->table()} 
+					FROM {$this->table} 
 					WHERE collection_id = %d 
 					ORDER BY start_date DESC, start_time DESC LIMIT 1",
 				$collection_id
@@ -136,8 +136,8 @@ class Database {
 	public function countCollection( $collection_id ) {
 		$result = $this->wpdb()->get_results(
 			$this->wpdb()->prepare(
-				"SELECT count(id) as n, isNULL({$this->table()}.content_id) as nullpost
-					FROM {$this->table()} 
+				"SELECT count(id) as n, isNULL({$this->table}.content_id) as nullpost
+					FROM {$this->table} 
 					WHERE collection_id = %d GROUP BY nullpost",
 				$collection_id
 			)
@@ -154,7 +154,7 @@ class Database {
 	public function getContentDate( $content_id ) {
 		$results = $this->wpdb()->get_row( $this->wpdb()->prepare(
 			"SELECT id, collection_id, content_id, start_date, end_date, start_time, end_time
-				FROM {$this->table()} WHERE content_id = %d LIMIT 1",
+				FROM {$this->table} WHERE content_id = %d LIMIT 1",
 			$content_id
 		) );
 
@@ -186,7 +186,10 @@ class Database {
 	function createTables() {
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
-		\dbDelta( "CREATE TABLE IF NOT EXISTS {$this->table()}
+		// TODO: datable table
+		// TODO: datable config table
+
+		\dbDelta( "CREATE TABLE IF NOT EXISTS {$this->table}
 		(
 		 id bigint(20) unsigned auto_increment,
 		 

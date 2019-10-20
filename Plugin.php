@@ -24,6 +24,7 @@ namespace Palasthotel\WordPress\Datable;
  * @property PostTypes post_types
  * @property MetaBoxes meta_boxes
  * @property PostTableColumns post_table_columns
+ * @property Settings settings
  */
 class Plugin{
 
