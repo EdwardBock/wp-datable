@@ -22,9 +22,9 @@ class Settings {
 
 	public function admin_menu() {
 		add_submenu_page(
-			"edit.php?post_type=" . $this->plugin->post_types->getDatableSlug(),
-			'Settings ‹ Datables',
-			'Settings',
+			"options-general.php",
+			__('Settings ‹ Datable', Plugin::DOMAIN),
+			__('Datable', Plugin::DOMAIN),
 			'manage_options',
 			self::MENU_SLUG,
 			array(

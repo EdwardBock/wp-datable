@@ -10,7 +10,7 @@
  * Text Domain: datable
  * Domain Path: /languages
  * Requires at least: 4.0
- * Tested up to: 5.2.2
+ * Tested up to: 5.2.4
  * License: http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  * @copyright Copyright (c) 2017, Palasthotel
  * @package Palasthotel\WordPress\Datable
@@ -20,17 +20,19 @@ namespace Palasthotel\WordPress\Datable;
 
 /**
  * @property Database database
- * @property WPQueryExtension wp_query_extension
- * @property PostTypes post_types
- * @property MetaBoxes meta_boxes
- * @property PostTableColumns post_table_columns
+ * @property WPQueryExtension $wpQueryExtension
+ * @property PostTypes $postTypes
+ * @property MetaBoxes $metaBoxes
+ * @property PostTableColumns $postTableColumns
  * @property Settings settings
+ * @property PostDatable postDatable
  */
 class Plugin{
 
 	const DOMAIN = "datable";
 
-	const FILTER_POST_TYPE = "datable_post_type";
+	const FILTER_POST_TYPE_SLUG = "datable_post_type_slug";
+	const FILTER_POST_TYPE_ARGS = "datable_post_type_args";
 
 	const OPTION_POST_TYPES = "datable_post_types";
 	const OPTION_POST_TYPE_FOR_AUTO_GENERATION = "datable_post_type_for_auto_generation";
@@ -38,15 +40,21 @@ class Plugin{
 
 	public function __construct() {
 
+		load_plugin_textdomain(
+			self::DOMAIN,
+			false,
+			dirname( plugin_basename( __FILE__ ) ) . '/languages'
+		);
+
 		require_once dirname(__FILE__)."/vendor/autoload.php";
 
-		$this->database = new Database();
-		$this->post_types = new PostTypes($this);
-		$this->wp_query_extension = new WPQueryExtension($this);
-		$this->meta_boxes = new MetaBoxes($this);
-		$this->post_table_columns = new PostTableColumns($this);
-		$this->settings = new Settings($this);
-
+		$this->database         = new Database();
+		$this->postTypes        = new PostTypes($this);
+		$this->wpQueryExtension = new WPQueryExtension($this);
+		$this->metaBoxes        = new MetaBoxes($this);
+		$this->postDatable      = new PostDatable($this);
+		$this->postTableColumns = new PostTableColumns($this);
+		$this->settings         = new Settings($this);
 
 		// TODO: date migration
 
@@ -58,6 +66,9 @@ class Plugin{
 
 	public function activation(){
 		$this->database->createTables();
+
+		$this->postTypes->init();
+		flush_rewrite_rules();
 	}
 
 	public function deactivation(){

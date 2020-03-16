@@ -10,8 +10,8 @@ namespace Palasthotel\WordPress\Datable\Model;
  * @property null|string end_date
  * @property null|string start_time
  * @property null|string end_time
- * @property null|int collection_id
- * @property null|int content_id
+ * @property int content_id // content to display
+ * @property null|int datable_id // auto generated datable post
  */
 class Datable {
 
@@ -36,21 +36,16 @@ class Datable {
 	 * @return Datable
 	 */
 	public static function parse( $row ) {
-		$d                = new Datable( $row->start_date );
-		$d->id            = $row->id;
-		$d->end_date      = $row->end_date;
-		$d->start_time    = $row->start_time;
-		$d->end_time      = $row->end_time;
-		$d->collection_id = $row->collection_id;
-		$d->content_id    = $row->content_id;
+		$d             = new Datable( $row->start_date );
+		$d->id         = intval($row->id);
+		$d->end_date   = $row->end_date;
+		$d->start_time = $row->start_time;
+		$d->end_time   = $row->end_time;
+		$d->content_id = intval($row->content_id);
+		$d->datable_id = ($row->datable_id)? intval($row->datable_id): null;
 
 		return $d;
 	}
-
-	/**
-	 * @var int
-	 */
-	var $collection_id;
 
 	/**
 	 * Datable constructor.
@@ -72,21 +67,20 @@ class Datable {
 			$this->start_date = $start_date;
 		}
 
-		$this->id            = NULL;
-		$this->collection_id = NULL;
-		$this->content_id    = NULL;
-		$this->end_date      = NULL;
-		$this->start_time    = NULL;
-		$this->end_time      = NULL;
+		$this->id         = NULL;
+		$this->content_id = NULL;
+		$this->datable_id = NULL;
+		$this->end_date   = NULL;
+		$this->start_time = NULL;
+		$this->end_time   = NULL;
 
 	}
 
-	public function hasCollection() {
-		return $this->collection_id !== NULL;
-	}
-
-	public function hasContent() {
-		return $this->content_id !== NULL;
+	/**
+	 * @return bool
+	 */
+	public function hasDatablePostId() {
+		return $this->datable_id !== NULL;
 	}
 
 	/**

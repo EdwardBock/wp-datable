@@ -1,0 +1,118 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Datable\n"
+"POT-Creation-Date: 2019-10-23 19:14+0200\n"
+"PO-Revision-Date: 2019-10-23 19:15+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.4\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: Plugin.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"X-Poedit-SearchPathExcluded-1: vendor\n"
+
+#: classes/MetaBoxes.php:29
+msgid "Dates"
+msgstr "Termine"
+
+#: classes/MetaBoxes.php:37
+msgid "Date"
+msgstr "Termin"
+
+#. Plugin Name of the plugin/theme
+#: classes/PostTypes.php:22 classes/Settings.php:27
+msgid "Datable"
+msgstr "Datierbarkeit"
+
+#: classes/PostTypes.php:23
+msgid "Collections of datables"
+msgstr ""
+
+#: classes/Settings.php:26
+#, fuzzy
+#| msgid "Settings ‹ Datables"
+msgid "Settings ‹ Datable"
+msgstr "Einstellungen ‹ Datierbarkeit"
+
+#: classes/Settings.php:48
+msgid "Settings ‹ Datables"
+msgstr "Einstellungen ‹ Datierbarkeiten"
+
+#: classes/Settings.php:56
+msgid "Post types"
+msgstr ""
+
+#: classes/Settings.php:57
+msgid "Select all post types that should be datable."
+msgstr "Wählen Sie alle Posttypen aus, die datierbar sein sollen."
+
+#: classes/Settings.php:77
+msgid "Auto generation"
+msgstr ""
+
+#: classes/Settings.php:79
+msgid ""
+"You can either assign a single date to a content manually or you can use the "
+"automatic content generation for a Datables collection."
+msgstr ""
+
+#: classes/Settings.php:80
+msgid "Datables are internal copy templates that hold a series of dates."
+msgstr ""
+
+#: classes/Settings.php:89
+msgid "Post type"
+msgstr ""
+
+#: classes/Settings.php:109
+msgid "Default post type for auto generated contents."
+msgstr ""
+
+#: classes/Settings.php:115
+msgid "Number"
+msgstr ""
+
+#: classes/Settings.php:126
+msgid "Number of contents that are generated in the future."
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/palasthotel/wp-datable"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Make your contents datable"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Palasthotel <rezeption@palasthotel.de>"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://palasthotel.de"
+msgstr ""
+
+#~ msgid "Datables"
+#~ msgstr "Datierbarkeiten"
+
+#~ msgctxt "Post Type General Name"
+#~ msgid "Datables"
+#~ msgstr "Datierbarkeiten"
+
+#~ msgctxt "Post Type Singular Name"
+#~ msgid "Datable"
+#~ msgstr "Datierbarkeit"
+
+#~ msgid "Add New Datable"
+#~ msgstr "Neuer Termin"

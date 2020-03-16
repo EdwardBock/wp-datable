@@ -45,8 +45,7 @@ class WPQueryExtension {
 		if(!$this->hasDatable($wp_query)) return $join;
 
 		$db = $this->plugin->database;
-		$join .= " LEFT JOIN {$db->tableContents()} ON ({$db->wpdb()->posts}.ID = {$db->tableContents()}.post_id) ";
-		$join .= " LEFT JOIN {$db->tableDates} ON ({$db->tableContents()}.date_id = {$db->tableDates()}.id)";
+		$join .= " LEFT JOIN {$db->table} ON ({$db->wpdb->posts}.ID = {$db->table}.content_id) ";
 
 		return $join;
 	}
@@ -64,10 +63,8 @@ class WPQueryExtension {
 		if ( !$this->hasDatable($wp_query) ) return $where;
 
 		$db = $this->plugin->database;
-		global $wpdb;
 		$where .= " AND ( ".
-		          " $wpdb->posts.ID = $db->table.content_id ".
-		          " AND {$db->table}.start_date IS NOT NULL".
+		          " {$db->table}.start_date IS NOT NULL".
 		          " AND {$db->table}.start_date >= now() ".
 		          " )";
 

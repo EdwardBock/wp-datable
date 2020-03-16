@@ -3,9 +3,11 @@
 
 namespace Palasthotel\WordPress\Datable;
 
-
 use Palasthotel\WordPress\Datable\Model\Datable;
 
+/**
+ * @property Plugin plugin
+ */
 class PostTableColumns {
 	public function __construct(Plugin $plugin) {
 		$this->plugin = $plugin;
@@ -14,7 +16,7 @@ class PostTableColumns {
 	}
 	public function add_column($columns){
 
-		if(get_post_type() !== $this->plugin->post_types->getDatableSlug()) return $columns;
+		if(get_post_type() !== $this->plugin->postTypes->getDatableSlug()) return $columns;
 		$date_label = $columns["date"];
 		unset($columns["date"]);
 		$columns["info"] = "Info";
@@ -31,7 +33,7 @@ class PostTableColumns {
 			$last = $this->plugin->database->getLastDateOfCollection($collection_id);
 			if($last) $this->renderDateDetails($last);
 		} else if($column == "info"){
-			$count = $this->plugin->database->countCollection($collection_id);
+			$count = $this->plugin->database->countDates($collection_id);
 			if($count){
 				echo "Dates: ".$count->overall();
 				echo "<span class='description'>";
